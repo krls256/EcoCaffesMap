@@ -1,35 +1,39 @@
-import React, {Component} from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import React, {useEffect} from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import Map from '../map';
+import * as actions from '../../actions';
+import { connect } from 'react-redux';
+import getDataFromDB from '../../services/getDataFromDB';
+import getGeolocation from '../../services/getGeolocation';
+import ModalDetails from '../modal-details/modal-details';
+import MapView from "react-native-maps";
+import InfoBox from '../info-box';
 
-export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      dataBase: null
-    };
-  }
-  componentDidMount() {
-    fetch('https://ecocaffemap.firebaseio.com/arr.json')
-      .then(res => res.json())
-      .then(data => {
-        const dataBase = [];
-        for (const i in data) {
-          dataBase.push(data[i]);
-        }
-        this.setState({dataBase})
-      })
-      .catch(err => console.log(`err: ${err}`));
-  }
 
-  render() {
-    const { dataBase } = this.state;
-    if(!dataBase) {
-      return <Text style={style.text}>Wait</Text>
-    }
-    return <Map base={ this.state.dataBase }/>
+const App = ({dataBase,update, set_region}) => {
+  useEffect(() => {
+    getDataFromDB(update);
+    getGeolocation(set_region);
+  }, []);
+
+  if(!dataBase) {
+    return <Text style={style.text}>Wait</Text>
   }
-}
+  return (
+    <View style={{flex: 1}}>
+      <Map/>
+      <InfoBox/>
+    </View>
+    )
+};
+
+const mapStateToProps = ({dataBase}) => {
+  return {
+    dataBase,
+  }
+};
+
+export default connect(mapStateToProps, actions)(App);
 
 const style = StyleSheet.create({
   text: {
@@ -41,3 +45,5 @@ const style = StyleSheet.create({
     fontSize: 35
   }
 });
+
+

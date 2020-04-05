@@ -1,22 +1,33 @@
-import React from 'react'
-import {StyleSheet, View, Text, Dimensions, Linking} from 'react-native'
+import React from 'react';
+import {StyleSheet, View, Text, Dimensions, Linking} from 'react-native';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
-const InfoBox = ({name, description}) => {
-  if (name && description) {
-    return (
-      <View style={style.window}>
-        <Text style={style.name}>{name}</Text>
-        <Text style={style.description}>{description}</Text>
-        <Text style={style.link}
-              onPress={() => Linking.openURL('https://www.instagram.com/p/B-SMoXUFm9G/')}>
-          Important info
-        </Text>
-      </View>
-    )
+const InfoBox = ({currentMarker, set_true}) => {
+  if (!currentMarker) {
+    currentMarker = {}
   }
+  const { name, address, schedule} = currentMarker;
+    if (name && address && schedule) {
+      return (
+        <View style={style.window}>
+          <Text style={style.name}>{name}</Text>
+          <Text style={style.description}>{address}</Text>
+          <Text style={style.description}>{schedule}</Text>
+          <Text style={style.link}
+                onPress={set_true}>
+            Детальніше...
+          </Text>
+        </View>
+      )
+    }
   return <View/>
 };
-export default InfoBox;
+const mapStateToProps = ({currentMarker}) => ({currentMarker})
+;
+export default connect(mapStateToProps, actions)(InfoBox);
+
+
 
 const BoxWidth = 300;
 const style = StyleSheet.create({
