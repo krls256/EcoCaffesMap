@@ -7,14 +7,18 @@ export default async (set_region) => {
     const response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
     if (response === 'granted') {
       findCurrentPosition(set_region);
+    } else {
+
     }
   }
 };
 const findCurrentPosition = (set_region) => {
-  Geolocation.getCurrentPosition(({coords}) => {
-    set_region({
-      latitude: coords.latitude,
-      longitude: coords.longitude,
+    Geolocation.getCurrentPosition(({coords}) => {
+      set_region({
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      })
+    }, () => {
+      console.log('ouups')
     })
-  })
 };

@@ -23,3 +23,13 @@ export const set_true = () => ({ type: 'TRUE'});
 
 export const set_false = () => ({ type: 'FALSE'});
 
+export const set_city = (payload) => ({
+  type: 'SET_CITY',
+  payload
+});
+
+export const set_initial_city = (payload) => ({
+  type: 'SET_INITIAL_CITY',
+  payload
+});
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions, Linking} from 'react-native';
+import {StyleSheet, View, Text, Dimensions, TouchableOpacity} from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
@@ -10,15 +10,15 @@ const InfoBox = ({currentMarker, set_true}) => {
   const { name, address, schedule} = currentMarker;
     if (name && address && schedule) {
       return (
-        <View style={style.window}>
+        <TouchableOpacity style={style.window}
+              onPress={set_true}>
           <Text style={style.name}>{name}</Text>
           <Text style={style.description}>{address}</Text>
           <Text style={style.description}>{schedule}</Text>
-          <Text style={style.link}
-                onPress={set_true}>
+          <Text style={style.link}>
             Детальніше...
           </Text>
-        </View>
+        </TouchableOpacity>
       )
     }
   return <View/>

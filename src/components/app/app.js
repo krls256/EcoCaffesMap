@@ -1,23 +1,33 @@
 import React, {useEffect} from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import Map from '../map';
 import * as actions from '../../actions';
 import { connect } from 'react-redux';
 import getDataFromDB from '../../services/getDataFromDB';
 import getGeolocation from '../../services/getGeolocation';
-import ModalDetails from '../modal-details/modal-details';
-import MapView from "react-native-maps";
+import getCities from '../../services/getCities';
 import InfoBox from '../info-box';
+import { getData } from '../../services/asyncStorage'
 
+const App = ({dataBase, update, set_region, set_city, set_initial_city}) => {
 
-const App = ({dataBase,update, set_region}) => {
   useEffect(() => {
-    getDataFromDB(update);
+    getData('city')
+      .then(city => {
+        set_initial_city(JSON.parse(city));
+        set_region(JSON.parse(city))
+      });
+    getData('base')
+      .then(base => {
+        update(JSON.parse(base))
+      });
+    getCities(set_city);
     getGeolocation(set_region);
+    getDataFromDB(update);
   }, []);
 
   if(!dataBase) {
-    return <Text style={style.text}>Wait</Text>
+    return <ActivityIndicator size={100} color="#0000ff" style={style.spinner}/>
   }
   return (
     <View style={{flex: 1}}>
@@ -27,7 +37,7 @@ const App = ({dataBase,update, set_region}) => {
     )
 };
 
-const mapStateToProps = ({dataBase}) => {
+const mapStateToProps = ({dataBase, initialCity}) => {
   return {
     dataBase,
   }
@@ -36,13 +46,9 @@ const mapStateToProps = ({dataBase}) => {
 export default connect(mapStateToProps, actions)(App);
 
 const style = StyleSheet.create({
-  text: {
-    textAlign: 'center',
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 35
+  spinner: {
+    width: '100%',
+    height: '100%'
   }
 });
 

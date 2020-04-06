@@ -9,7 +9,6 @@ const ModalDetails = ({set_false, crutchCurrentMarker:
   return (
       <Modal animationType="slide"
              transparent
-             style={style.modal}
       >
         <View style={style.wrapper}>
           <Text style={style.header}>
