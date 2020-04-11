@@ -33,3 +33,7 @@ export const set_initial_city = (payload) => ({
   payload
 });
 
+export const reset_initial_city = () => ({
+  type: 'RESET_INITIAL_CITY'
+});
+

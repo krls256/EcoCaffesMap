@@ -35,7 +35,7 @@ const style = StyleSheet.create({
     width: BoxWidth,
     height: 150,
     position: 'absolute',
-    bottom: 40,
+    bottom: 50,
     left: (Dimensions.get('window').width -  BoxWidth)/2,
     borderRadius: 30,
   },

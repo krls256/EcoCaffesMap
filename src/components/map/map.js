@@ -6,6 +6,7 @@ import Markers from './markers'
 import * as actions from '../../actions'
 import ModalDetails from '../modal-details';
 import CityList from '../city-list';
+import Settings from '../settings';
 
 const Map = ({initialRegion, discard, modalDetails, cityList, initialCity}) => {
   const modal = modalDetails ? <ModalDetails/> : null;
@@ -20,6 +21,7 @@ const Map = ({initialRegion, discard, modalDetails, cityList, initialCity}) => {
         >
         <Markers/>
       </MapView>
+      <Settings/>
       {modal}
       {cityChooser}
     </View>
