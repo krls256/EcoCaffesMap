@@ -3,15 +3,23 @@ import {StyleSheet, View, Text, Dimensions, TouchableOpacity} from 'react-native
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
-const InfoBox = ({currentMarker, set_true}) => {
+const InfoBox = ({currentMarker, set_true, set_region}) => {
   if (!currentMarker) {
     currentMarker = {}
   }
-  const { name, address, schedule} = currentMarker;
+  const { name, address, schedule, lat, lng} = currentMarker;
+  const region = {
+    latitude: Number(lat),
+    longitude: Number(lng),
+  };
     if (name && address && schedule) {
       return (
         <TouchableOpacity style={style.window}
-              onPress={set_true}>
+              onPress={() => {
+                set_true();
+                console.log(region)
+                set_region(region)
+              }}>
           <Text style={style.name}>{name}</Text>
           <Text style={style.description}>{address}</Text>
           <Text style={style.description}>{schedule}</Text>
