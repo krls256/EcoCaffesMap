@@ -8,7 +8,7 @@ export default (update) => {
       for (const i in data) {
         dataBase.push(data[i]);
       }
-      update(dataBase)
+      update(dataBase);
       storeData('base', JSON.stringify(dataBase))
     })
     .catch(err => console.log(`err: ${err}`));

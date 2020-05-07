@@ -8,6 +8,7 @@ import getGeolocation from '../../services/getGeolocation';
 import getCities from '../../services/getCities';
 import InfoBox from '../info-box';
 import { getData } from '../../services/asyncStorage'
+import SettingsMenu from '../settingsMenu';
 
 const App = ({dataBase, update, set_region, set_city, set_initial_city}) => {
 
@@ -27,12 +28,13 @@ const App = ({dataBase, update, set_region, set_city, set_initial_city}) => {
   }, []);
 
   if(!dataBase) {
-    return <ActivityIndicator size={100} color="#0000ff" style={style.spinner}/>
+    return <ActivityIndicator size={100} color="#8EBF45" style={style.spinner}/>
   }
   return (
     <View style={{flex: 1}}>
       <Map/>
       <InfoBox/>
+      <SettingsMenu/>
     </View>
     )
 };

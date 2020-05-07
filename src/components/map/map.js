@@ -2,15 +2,15 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import { connect } from 'react-redux'
-import Markers from './markers'
+import Markers from '../markers'
 import * as actions from '../../actions'
-import ModalDetails from '../modal-details';
 import CityList from '../city-list';
 import Settings from '../settings';
+import LikeList from '../like-list';
 
-const Map = ({initialRegion, discard, modalDetails, cityList, initialCity}) => {
-  const modal = modalDetails ? <ModalDetails/> : null;
+const Map = ({initialRegion, discard, cityList, initialCity, likeListActive}) => {
   const cityChooser = cityList && !initialCity ? <CityList/> : null;
+  const likeList = likeListActive ? <LikeList /> : null;
   return (
     <View style={style.container}>
       <MapView style={style.map}
@@ -22,17 +22,17 @@ const Map = ({initialRegion, discard, modalDetails, cityList, initialCity}) => {
         <Markers/>
       </MapView>
       <Settings/>
-      {modal}
       {cityChooser}
+      {likeList}
     </View>
   )
 };
 
-const mapStateToProps = ({dataBase, initialRegion, modalDetails, cityList, initialCity}) => {
+const mapStateToProps = ({dataBase, initialRegion, likeListActive, cityList, initialCity}) => {
   return {
     dataBase,
     initialRegion,
-    modalDetails,
+    likeListActive,
     cityList,
     initialCity
   }
@@ -45,5 +45,5 @@ const style = StyleSheet.create({
   },
   container: {
     ...StyleSheet.absoluteFillObject
-  }
+  },
 });

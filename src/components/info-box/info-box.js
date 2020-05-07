@@ -1,81 +1,58 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Image, Linking} from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import Link from '../link';
 
-const InfoBox = ({currentMarker, set_true, set_region}) => {
-  if (!currentMarker) {
-    currentMarker = {}
+import plus from '../../images/plusik.png'
+import minus from '../../images/minusik.png'
+import fb from '../../images/fb.png'
+import insta from '../../images/insta.png'
+
+
+const InfoBox = ({currentMarker, likeList, pull_like}) => {
+    if (currentMarker) {
+      const inLikeList = likeList.find(item => item === currentMarker.number);
+      const likeImage = inLikeList ? minus : plus;
+
+      const {facebook, instagram} = currentMarker;
+      const fbContent = facebook ? <Link img={fb} url={facebook}/> : null;
+      const instaContent = instagram ? <Link img={insta} url={instagram}/>: null;
+
+    return (
+        <View style={style.wrapper}>
+            {fbContent}
+          <TouchableOpacity style={style.imgWrap}
+            onPress={() => {pull_like(currentMarker.number)}}>
+            <Image source={likeImage} style={style.img}/>
+          </TouchableOpacity>
+            {instaContent}
+        </View>
+    )
   }
-  const { name, address, schedule, lat, lng} = currentMarker;
-  const region = {
-    latitude: Number(lat),
-    longitude: Number(lng),
-  };
-    if (name && address && schedule) {
-      return (
-        <TouchableOpacity style={style.window}
-              onPress={() => {
-                set_true();
-                console.log(region)
-                set_region(region)
-              }}>
-          <Text style={style.name}>{name}</Text>
-          <Text style={style.description}>{address}</Text>
-          <Text style={style.description}>{schedule}</Text>
-          <Text style={style.link}>
-            Детальніше...
-          </Text>
-        </TouchableOpacity>
-      )
-    }
   return <View/>
 };
-const mapStateToProps = ({currentMarker}) => ({currentMarker})
+const mapStateToProps = ({currentMarker, likeList}) => ({currentMarker, likeList})
 ;
 export default connect(mapStateToProps, actions)(InfoBox);
 
-
-
-const BoxWidth = 300;
 const style = StyleSheet.create({
-  window: {
-    width: BoxWidth,
-    height: 150,
-    position: 'absolute',
-    bottom: 50,
-    left: (Dimensions.get('window').width -  BoxWidth)/2,
-    borderRadius: 30,
+  wrapper: {
+      position: 'absolute',
+      bottom: 40,
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'center',
   },
-  name: {
-    width: '100%',
-    backgroundColor: 'rgba(240, 240, 240, .8)',
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
-    alignItems: 'center',
-    fontSize: 17,
-    fontWeight: '400',
-    color: '#4285f4',
-    textAlign: 'center',
-  },
-  description: {
-    width: '100%',
-    backgroundColor: 'rgba(255, 255, 255, .8)',
-    alignItems: 'center',
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#333333'
-  },
-  link: {
-    width: '100%',
-    backgroundColor: 'rgba(240, 240, 240, .8)',
-    borderBottomRightRadius: 30,
-    borderBottomLeftRadius: 30,
-    alignItems: 'center',
-    textAlign: 'center',
-    fontSize: 13,
-    fontWeight: '400',
-    color: '#4285f4'
-  }
+    imgWrap: {
+        width: 50,
+        height: 50,
+        marginHorizontal: 15,
+    },
+    img: {
+        width: '100%',
+        height: '100%'
+    }
 });
+
 

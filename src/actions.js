@@ -17,11 +17,7 @@ export const crutch = (payload) => ({
   payload
 });
 
-  export const discard = () => ({ type: 'DISCARD'});
-
-export const set_true = () => ({ type: 'TRUE'});
-
-export const set_false = () => ({ type: 'FALSE'});
+export const discard = () => ({ type: 'DISCARD'});
 
 export const set_city = (payload) => ({
   type: 'SET_CITY',
@@ -36,4 +32,21 @@ export const set_initial_city = (payload) => ({
 export const reset_initial_city = () => ({
   type: 'RESET_INITIAL_CITY'
 });
+
+export const toggle_settings = () => ({
+  type: "TOGGLE"
+});
+
+export const pull_like = (payload) => ({
+  type: "PULL",
+  payload
+});
+
+export const like_list_true = () => ({
+  type: "LIKE_TRUE",
+});
+export const like_list_false = () => ({
+  type: "LIKE_FALSE",
+});
+
 

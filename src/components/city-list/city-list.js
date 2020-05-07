@@ -40,31 +40,36 @@ export default connect(mapStateToProps, actions)(CityList);
 
 const style = StyleSheet.create({
   wrapper: {
-    width: '80%',
-    height: '80%',
+    width: '100%',
+    height: '70%',
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
-    marginTop: '10%',
-    marginLeft: '10%',
-    borderRadius: 50
+    marginTop: '59%',
   },
   header: {
     textAlign: 'center',
     fontSize: 22,
-    fontWeight: '700',
     marginTop: 14,
-    borderBottomWidth: 1,
+    color: '#35383B',
+    opacity: 0.7,
+    fontFamily: 'PTSerif-Bold',
     height: 30,
     lineHeight: 22,
+    borderBottomWidth: 1,
+    borderColor: "#8EBF45"
   },
   text: {
     textAlign: 'center',
-    fontWeight: '700',
+    color: '#35383B',
+    opacity: 0.7,
+    fontFamily: 'PTSerif-Bold',
     paddingVertical: 5,
+    fontSize: 18,
+    lineHeight: 18,
     marginHorizontal: 10,
     marginVertical: 7,
     borderBottomWidth: 0.5,
-    fontSize: 18,
-    lineHeight: 18
+    borderColor: '#8EBF45'
+
   },
 });

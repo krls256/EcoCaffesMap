@@ -19,6 +19,5 @@ const findCurrentPosition = (set_region) => {
         longitude: coords.longitude,
       })
     }, () => {
-      console.log('ouups')
     })
 };
