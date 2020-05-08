@@ -1,10 +1,10 @@
 import React from 'react'
-import { Modal, StyleSheet, View, FlatList, TouchableOpacity, Text } from 'react-native';
+import { Modal, StyleSheet, View, FlatList,  Text } from 'react-native';
 import {connect} from 'react-redux'
 import * as actions from '../../actions'
 import FlatListItem from '../flat-list-item';
 
-const LikeList = ({like_list_false, set_region , dataBase}) => {
+const LikeList = ({like_list_false, set_region , dataBase, allMarkersRef, likeList}) => {
     return (
         <Modal animationType="slide"
                transparent
@@ -14,10 +14,15 @@ const LikeList = ({like_list_false, set_region , dataBase}) => {
                 <FlatList   style={style.list}
                             data={dataBase}
                             keyExtractor={item => item.number}
-                            renderItem={({item}) => <FlatListItem name={item.name}
-                                                                  address={item.address}
-                                                                  fnc={like_list_false}
-                                                                  set_region={set_region}/> }/>
+                            renderItem={({item}) => {
+                                if(likeList.find(it => it === item.number)) {
+                                    return <FlatListItem fnc={like_list_false}
+                                                         set_region={set_region}
+                                                         item={item}
+                                                         suitableMarker={allMarkersRef[item.number]}/>
+                                }
+                                return null;
+                            }}/>
                  <Text style={{...style.title, ...style.back}}
                         onPress={like_list_false}>Назад</Text>
             </View>
@@ -27,8 +32,8 @@ const LikeList = ({like_list_false, set_region , dataBase}) => {
     )
 };
 
-const mapStateToProps = ({dataBase}) => ({
-    dataBase,
+const mapStateToProps = ({dataBase, allMarkersRef, likeList}) => ({
+    dataBase, allMarkersRef, likeList
 });
 
 export default connect(mapStateToProps, actions)(LikeList);

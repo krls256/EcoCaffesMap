@@ -7,12 +7,20 @@ import getDataFromDB from '../../services/getDataFromDB';
 import getGeolocation from '../../services/getGeolocation';
 import getCities from '../../services/getCities';
 import InfoBox from '../info-box';
-import { getData } from '../../services/asyncStorage'
+import { getData, storeData } from '../../services/asyncStorage'
 import SettingsMenu from '../settingsMenu';
 
-const App = ({dataBase, update, set_region, set_city, set_initial_city}) => {
 
+const App = ({dataBase, update, set_region, set_city, set_initial_city, pull_like, likeList}) => {
+    if(likeList.length !== 0) {
+        storeData('like', JSON.stringify(likeList))
+    }
   useEffect(() => {
+      getData('like')
+          .then((likeList) => {
+              JSON.parse(likeList).forEach(item => pull_like(item))
+          })
+          .catch(() => {});
     getData('city')
       .then(city => {
         set_initial_city(JSON.parse(city));
@@ -39,9 +47,9 @@ const App = ({dataBase, update, set_region, set_city, set_initial_city}) => {
     )
 };
 
-const mapStateToProps = ({dataBase, initialCity}) => {
+const mapStateToProps = ({dataBase, likeList}) => {
   return {
-    dataBase,
+    dataBase, likeList
   }
 };
 

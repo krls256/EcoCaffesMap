@@ -1,13 +1,11 @@
 import React from 'react';
-import {Callout} from 'react-native-maps';
-import {Text, View, StyleSheet, Image, Linking, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+
 
 import logo from '../../images/google.png'
-import fb from '../../images/fb.png';
-import triangle from '../../images/triangle.png'
 
-const CustomCallout = ({item}) => {
-    const { name, address, schedule, discount, facebook } = item;
+const CustomCallout = ({item, images}) => {
+    const { name, address, schedule, discount } = item;
     const optional = discount ? (<React.Fragment>
         <Text style={style.text}>{discount}</Text>
         <View style={style.breakLine}/>

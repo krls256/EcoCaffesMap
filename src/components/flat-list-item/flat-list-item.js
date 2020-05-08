@@ -1,12 +1,20 @@
 import React from 'react'
 import { View, Text ,StyleSheet, TouchableOpacity } from 'react-native';
 
-const FlatListItem = ({name, address, fnc}) => {
+const FlatListItem = ({fnc, set_region, item, suitableMarker}) => {
+    const coords = {
+        latitude: Number(item.lat),
+        longitude: Number(item.lng),
+    };
     return (
         <TouchableOpacity style={style.wrapper}
-            onPress={fnc}>
-            <Text style={style.name}>{name}</Text>
-            <Text style={style.address}>{address}</Text>
+            onPress={() => {
+                fnc();
+                set_region(coords);
+                suitableMarker.showCallout()
+            }}>
+            <Text style={style.name}>{item.name}</Text>
+            <Text style={style.address}>{item.address}</Text>
         </TouchableOpacity>
     )
 };

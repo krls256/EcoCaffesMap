@@ -23,7 +23,9 @@ const InfoBox = ({currentMarker, likeList, pull_like}) => {
         <View style={style.wrapper}>
             {fbContent}
           <TouchableOpacity style={style.imgWrap}
-            onPress={() => {pull_like(currentMarker.number)}}>
+            onPress={() => {
+                pull_like(currentMarker.number);
+            }}>
             <Image source={likeImage} style={style.img}/>
           </TouchableOpacity>
             {instaContent}

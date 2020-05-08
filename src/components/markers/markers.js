@@ -7,10 +7,11 @@ import CustomCallout from '../custom-callout';
 
 import img from '../../images/cafepoint.png'
 
-const Markers =  ({dataBase, choose, crutch}) => {
+const Markers =  ({dataBase, choose, add_marker}) => {
   if (dataBase) {
     return dataBase.map(item => {
-        return <Marker coordinate={{
+        return <Marker ref={(marker) => add_marker(marker, item.number)}
+            coordinate={{
             latitude: +item.lat,
             longitude: +item.lng
         }}
@@ -18,7 +19,6 @@ const Markers =  ({dataBase, choose, crutch}) => {
                 key={item.number}
                 onPress={() => {
                     choose(item);
-                    crutch(item);
                 }}
         >
             <Callout tooltip
@@ -35,8 +35,9 @@ const Markers =  ({dataBase, choose, crutch}) => {
   return <View/>
 };
 
-const mapStateToProps = ({dataBase}) => {
-  return { dataBase }
-};
+const mapStateToProps = ({dataBase}) => ({
+    dataBase
+    })
+;
 
 export default connect(mapStateToProps, actions)(Markers)

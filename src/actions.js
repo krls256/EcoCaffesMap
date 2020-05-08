@@ -12,10 +12,6 @@ export const choose = (payload) => ({
   type: 'CHOOSE',
   payload
 });
-export const crutch = (payload) => ({
-  type: 'CRUTCH',
-  payload
-});
 
 export const discard = () => ({ type: 'DISCARD'});
 
@@ -47,6 +43,12 @@ export const like_list_true = () => ({
 });
 export const like_list_false = () => ({
   type: "LIKE_FALSE",
+});
+
+export const add_marker = (payload, index) => ({
+  type: "ADD_MARKER",
+  payload,
+  index
 });
 
 
